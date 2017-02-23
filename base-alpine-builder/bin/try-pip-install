@@ -1,0 +1,16 @@
+#! /bin/bash
+
+set -ex
+
+if [ -a "requirements.txt" ]
+then
+  echo "Pip it up!"
+else
+  echo "Didn't find requirements.txt. No pip install for you!"
+  exit 0
+fi
+
+export PYENV_ROOT=/usr/local/pyenv
+export PATH=/usr/local/pyenv/shims:/usr/local/pyenv/bin:$PATH
+
+pip install -r /data/app/requirements.txt

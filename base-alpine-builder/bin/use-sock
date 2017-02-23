@@ -1,0 +1,1 @@
+cp /etc/templates/nginx/vhost.sock.conf /etc/nginx/conf.d/vhost.conf

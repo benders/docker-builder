@@ -1,0 +1,4 @@
+cp /etc/templates/ruby/unicorn_config.rb /data/app/config/unicorn_config.rb
+
+mkdir -p /etc/services.d/web
+cp /etc/templates/s6/web.unicorn /etc/services.d/web/run

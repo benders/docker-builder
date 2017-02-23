@@ -1,0 +1,37 @@
+common: &default_settings
+
+  host: collector.newrelic.com
+  port: 443
+  ssl: true
+  license_key: 'Set your key via ENV NEW_RELIC_LICENSE_KEY'
+
+  app_name: <%=ENV['SERVICE_NAME']%>
+
+  monitor_mode: true
+  developer_mode: false
+
+  log_level: info
+  log_file_path: stdout
+
+  # Tells transaction tracer and error collector (when enabled)
+  # whether or not to capture HTTP params.
+  capture_params: true
+
+development:
+  <<: *default_settings
+  app_name: "<%=ENV['SERVICE_NAME']%> (Development)"
+  monitor_mode: false
+  developer_mode: true
+
+test:
+  <<: *default_settings
+  monitor_mode: false
+
+production:
+  <<: *default_settings
+  monitor_mode: true
+
+staging:
+  <<: *default_settings
+  monitor_mode: true
+  app_name: "<%=ENV['SERVICE_NAME']%> (Staging)"

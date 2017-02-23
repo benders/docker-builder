@@ -1,0 +1,2 @@
+mkdir -p /etc/services.d/app
+cp /etc/templates/s6/app.bin-run /etc/services.d/app/run

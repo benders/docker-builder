@@ -1,0 +1,15 @@
+#! /bin/bash
+
+check_files ()
+{
+  if [ -a $2 ] && ! cmp -s $1 $2
+  then
+    echo "*************************************************"
+    echo "WARNING: You overrode $2 from the defaults. That's fine, but be sure you meant to!"
+    echo "*************************************************"
+  fi
+}
+
+check_files /etc/templates/ruby/newrelic.yml /data/app/config/newrelic.yml
+check_files /etc/templates/ruby/unicorn_config.rb /data/app/config/unicorn_config.rb
+check_files /etc/templates/ruby/puma_config.rb /data/app/config/puma_config.rb

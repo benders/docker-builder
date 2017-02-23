@@ -1,0 +1,16 @@
+#! /bin/bash
+
+set -ex
+
+if [ -a "config.ru" ]
+then
+  echo "Setting up for a Ruby web app"
+else
+  echo "Didn't find config.ru, no Ruby web app for you!"
+  exit 0
+fi
+
+cp /etc/templates/ruby/newrelic.yml /data/app/config/newrelic.yml
+
+use-unicorn
+use-sock

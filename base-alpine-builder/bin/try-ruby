@@ -1,0 +1,44 @@
+#! /bin/bash
+
+set -ex
+
+if [ -a ".ruby-version" ]
+then
+  echo "Installing Ruby!"
+else
+  echo "Didn't find .ruby-version, not installing Ruby"
+  exit 0
+fi
+
+apk --no-cache add git tzdata
+
+# Setup rbenv in /usr/local/rbenv
+curl -L https://github.com/sstephenson/rbenv/archive/master.tar.gz | tar xz -C /usr/local/
+mv /usr/local/rbenv-master /usr/local/rbenv
+
+echo '# rbenv setup' > /etc/profile.d/rbenv.sh
+echo 'export RBENV_ROOT=/usr/local/rbenv' >> /etc/profile.d/rbenv.sh
+echo 'export PATH="$RBENV_ROOT/bin:$PATH"' >> /etc/profile.d/rbenv.sh
+echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
+chmod +x /etc/profile.d/rbenv.sh
+
+ALPINE_VERSION=3.4
+RUBY_VERSION=$(cat .ruby-version)
+
+export RBENV_ROOT=/usr/local/rbenv
+export PATH=/usr/local/rbenv/shims:/usr/local/rbenv/bin:$PATH
+
+mkdir -p /usr/local/rbenv/versions
+
+# ruby-build
+mkdir -p /usr/local/rbenv/plugins/
+curl -L https://github.com/sstephenson/ruby-build/archive/master.tar.gz | tar xz -C /usr/local/rbenv/plugins/
+mv /usr/local/rbenv/plugins/ruby-build-master /usr/local/rbenv/plugins/ruby-build
+
+# Ruby ruby ruby....
+CONFIGURE_OPTS="--disable-install-doc" rbenv install $RUBY_VERSION
+
+rbenv global $RUBY_VERSION
+
+gem install --no-ri --no-rdoc bundler
+rbenv rehash

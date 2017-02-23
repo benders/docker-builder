@@ -1,0 +1,1 @@
+cp /etc/templates/nginx/vhost.3000.conf /etc/nginx/conf.d/vhost.conf

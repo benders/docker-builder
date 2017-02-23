@@ -1,0 +1,13 @@
+#! /bin/bash
+
+set -ex
+
+if [ -a ".preinstall" ]
+then
+  echo "Doing preinstallation"
+else
+  echo "Didn't find .preinstall. Get on with it!"
+  exit 0
+fi
+
+sh ./.preinstall

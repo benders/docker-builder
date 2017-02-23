@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv sh
+
+cd /data/app
+exec s6-setuidgid nobody bundle exec puma -C config/puma_config.rb

@@ -1,0 +1,17 @@
+#! /bin/bash
+
+set -ex
+
+if [ -a "Gemfile" ]
+then
+  echo "Every day I'm bundling!"
+else
+  echo "Didn't find Gemfile. No bundle for you!"
+  exit 0
+fi
+
+export RBENV_ROOT=/usr/local/rbenv
+export PATH=/usr/local/rbenv/shims:/usr/local/rbenv/bin:$PATH
+
+bundle install --deployment --without development --without test
+rbenv rehash
